@@ -3,30 +3,43 @@ import numpy
 import array
 import math
 
-x = []
+x = [0.0]*20
 eta = 0.1 #learning rate
 i = 0
 
 #Generating the 20 x values vector
 while i < 20:
   a = random.uniform(0,1)
-  x.append(a)
+  x[i] = a
   i = i + 1
 
-print(x)
-print("\n") #debug
-y = []
+w = [0.0]*5
+b = [0.0]*5
 
 i = 0
-#Generating the desired output
-while i < 20:
-  #print("executed\n") #debug
-  q1 = 2*math.pi*(x[i]/0.7)
-  q2 = 2*math.pi*x[i]
-  a1 = 1 + 0.6*math.sin(q1)
-  a2 = (0.3*math.sin(q2))/2
-  ind = a1+a2
-  y.append(ind)
+while i < 5:
+  w[i] = random.uniform(0,1)
+  b[i] = random.uniform(0,1)
   i = i + 1
+#Calculating v values
+i = 0
+q = 0
+r = 0
+v = [0.0] * (len(x)*len(w))
+while i < 20:
+    while q < 5:
+        v[r] = x[i]*w[q]-b[q]
+        r = r + 1
+        q = q + 1
 
-print(y)
+    i = i + 1
+#calculating desired output
+i = 0
+q = 0
+r = 0
+
+y = [0.0] * (len(x)*len(w))
+p = len(x)*len(w)
+while i < p:
+     y = 1/(1+math.exp(v[i]))
+     i = i + 1
