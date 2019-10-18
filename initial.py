@@ -28,18 +28,33 @@ r = 0
 v = [0.0] * (len(x)*len(w))
 while i < 20:
     while q < 5:
-        v[r] = x[i]*w[q]-b[q]
+        v[r] = x[i]*w[q]+b[q]
         r = r + 1
         q = q + 1
-
     i = i + 1
-#calculating desired output
+#Generating desired output
+p = len(x)*len(w)
+d = [0.0] * p
+i = 0
+while i < p:
+    d[i] = random.choice([0,0.5,1])
+#calculating actual output
 i = 0
 q = 0
 r = 0
-
-y = [0.0] * (len(x)*len(w))
-p = len(x)*len(w)
+y = [0.0] * p
+e = [0.0] * p
 while i < p:
-     y = 1/(1+math.exp(v[i]))
+     y[i] = 1/(1+math.exp(v[i]))
+     #calculating error here
+     e[i] = d[i] - y[i]
      i = i + 1
+e_total = sum(e)
+#Learning algorithm
+iterations = 2000 #times we will execute this
+i = 0
+while i < iterations:
+    while q < 20:  
+        a = a + eta*e(q)
+        
+    
