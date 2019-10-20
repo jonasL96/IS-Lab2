@@ -26,35 +26,40 @@ i = 0
 q = 0
 r = 0
 v = [0.0] * (len(x)*len(w))
-while i < 20:
-    while q < 5:
-        v[r] = x[i]*w[q]+b[q]
-        r = r + 1
-        q = q + 1
+d = [0.0] * 20
+#Desired output
+while i < len(x):
+    d[i] = (1+0.6*math.sin(2*math.pi*x[i]/0.7))+0.3*(math.sin(2*math.pi*x[i]))/2
     i = i + 1
-#Generating desired output
-p = len(x)*len(w)
-d = [0.0] * p
-i = 0
-while i < p:
-    d[i] = random.choice([0,0.5,1])
-#calculating actual output
 i = 0
 q = 0
 r = 0
+p = len(x)*len(w)
 y = [0.0] * p
 e = [0.0] * p
-while i < p:
-     y[i] = 1/(1+math.exp(v[i]))
-     #calculating error here
-     e[i] = d[i] - y[i]
-     i = i + 1
+#calculating actual output
+while i < 20:
+    while q < 5:
+        v[q] = x[i]*w[q]+b[q]
+        y[q] = 1/(1+math.exp(v[q]))
+        q = q + 1
+    #Calculating error
+    e[i] = d[i] - y[i]
+    i = i + 1
 e_total = sum(e)
+e_total = round(e_total,0) #rounded so there's no additional numbers after comma
+print(e_total)
+
 #Learning algorithm
 iterations = 2000 #times we will execute this
 i = 0
+q = 0
+r = 0
 while i < iterations:
-    while q < 20:  
+    while q < 20:
         a = a + eta*e(q)
-        
-    
+        while r < 5:
+            s = e[q]
+            w[r] = w[r] + eta*s[r]*x[q]
+            b[r] = w[r] + eta*s[r]
+        q = q + 1
